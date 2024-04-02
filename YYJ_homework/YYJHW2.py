@@ -1,8 +1,3 @@
-"""
-Modified on Feb 20 2020
-@author: lbg@dongseo.ac.kr 
-"""
-
 import pygame
 from sys import exit
 import numpy as np
@@ -20,7 +15,6 @@ width, height = background.get_size()
 screen = pygame.display.set_mode((width, height), 0, 32)
 pygame.display.set_caption("ImagePolylineMouseButton")
   
-# Define the colors we will use in RGB format
 BLACK = (  0,   0,   0)
 WHITE = (255, 255, 255)
 BLUE =  (  0,   0, 255)
@@ -31,13 +25,10 @@ old_pt = np.array([0, 0])
 cur_pt = np.array([0, 0])
 myfont2 = pygame.font.Font(None, 15)
  
-#screen.blit(background, (0,0))
 screen.fill(WHITE)
-
-# https://kite.com/python/docs/pygame.Surface.blit
 clock= pygame.time.Clock()
 
-#Loop until the user clicks the close button.
+
 done = False
 pressed = -1
 margin = 8
@@ -58,8 +49,6 @@ def AnimationFunction(a,color='Red', thick=5):
         screen.blit(textImage, (x-30, y-20))    
         
 while not done:   
-    # This limits the while loop to a max of 10 times per second.
-    # Leave this out and we will use all CPU we can.
     time_passed = clock.tick(60)
     time_passed_seconds = time_passed/10000.0
     screen.fill(WHITE)
@@ -120,9 +109,7 @@ while not done:
 
     print("mouse x:"+repr(x)+" y:"+repr(y)+" button:"+repr(button1)+" "+repr(button2)+" "+repr(button3)+" pressed:"+repr(pressed))
     old_pt = cur_pt   
-
-    # Go ahead and update the screen with what we've drawn.
-    # This MUST happen after all the other drawing commands.
+    
     pygame.display.update()
 
 pygame.quit()
