@@ -160,7 +160,6 @@ while not done:
             pressed3 = 1            
         elif event.type == pygame.QUIT:
             done = True
-        # play and stop Ain
         elif event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
             if Aim:
                 Aim = False
