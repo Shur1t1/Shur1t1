@@ -1,0 +1,47 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+image_path = "/mnt/data/COCA(1).jpg"
+cv2_image = cv2.imread(image_path)
+
+
+hsv_image = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2HSV)
+
+
+lower_red1 = np.array([0, 70, 50])    # Lower range of red hue (0-10)
+upper_red1 = np.array([10, 255, 255])
+
+lower_red2 = np.array([170, 70, 50])  # Upper range of red hue (170-180)
+upper_red2 = np.array([180, 255, 255])
+
+
+mask1 = cv2.inRange(hsv_image, lower_red1, upper_red1)
+mask2 = cv2.inRange(hsv_image, lower_red2, upper_red2)
+red_mask = cv2.bitwise_or(mask1, mask2)
+
+
+gray_image = cv2.cvtColor(cv2_image, cv2.COLOR_BGR2GRAY)
+
+
+gray_bgr_image = cv2.cvtColor(gray_image, cv2.COLOR_GRAY2BGR)
+
+
+pointwise_result = np.copy(gray_bgr_image)
+
+
+height, width, _ = cv2_image.shape
+for y in range(height):
+    for x in range(width):
+        if red_mask[y, x] > 0:  # If the pixel is in the red area
+            pointwise_result[y, x] = cv2_image[y, x]  # Use the original image's pixel
+
+
+pointwise_result_rgb = cv2.cvtColor(pointwise_result, cv2.COLOR_BGR2RGB)
+
+
+plt.figure(figsize=(10, 10))
+plt.imshow(pointwise_result_rgb)
+plt.axis('off')
+plt.show()
